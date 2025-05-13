@@ -1,0 +1,27 @@
+project:
+  type: website
+  output-dir: _site
+  resources:
+    - data/processed/
+
+website:
+  title: "Tunis, Tunisia"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: notebooks/1-cleaning-tunis.ipynb
+        text: Data Cleaning
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: true
+    include-in-header:
+      text: |
+        <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6"></script>
+    
+execute:
+  freeze: auto

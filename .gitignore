@@ -1,0 +1,23 @@
+# quarto output directory
+_site/
+.quarto/
+
+# # jupyter notebook checkpoints
+# .ipynb_checkpoints/
+
+# # python cache files
+# __pycache__/
+# *.py[cod]
+# *$py.class
+
+# # OS files
+# .DS_Store
+# Thumbs.db
+
+# # environment files
+# .env
+# .venv
+# env/
+# venv/
+# ENV/
+/.quarto/

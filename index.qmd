@@ -1,0 +1,276 @@
+---
+title: "CITY SCAN: TUNIS, TUNISIA"
+format: html
+
+---
+
+#### Import Modules
+
+```{ojs}
+// Import libraries explicitly
+Plot = require("@observablehq/plot")
+d3 = require("d3")
+// Plot = require("@observablehq/plot@0.6.14")
+// d3 = require("d3@7")
+```
+
+#### Data
+```{ojs}
+// load data as CSVs directly
+pop_growth = FileAttachment("data/processed/pop_growth.csv").csv({typed: true})
+pop_age_sex = FileAttachment("data/processed/pop_age_sex.csv").csv({typed: true})
+uba = FileAttachment("data/processed/uba.csv").csv({typed: true})
+pv = FileAttachment("data/processed/pv.csv").csv({typed: true}) //note: this placeholder pv data (actual data for Algiers PV - there is not data available for Tunis pv )
+```
+
+## POPULATION AND DEMOGRAPHIC TRENDS
+### POPULATION GROWTH & DENSITY
+
+```{ojs}
+// population growth chart with Plot
+chart_pop_growth= Plot.plot({
+  y: {
+    grid: true,
+    label: "Population",
+    // tickformat as function to avoid syntax issues
+    tickFormat: d => {
+      if (d === 0) return "0";
+      if (d === 500000) return "500K";
+      if (d === 1000000) return "1M";
+      if (d === 1500000) return "1.5M";
+      if (d === 2000000) return "2M";
+      if (d === 2500000) return "2.5M";
+      if (d === 3000000) return "3M";
+      if (d === 3500000) return "3.5M";
+      if (d === 4000000) return "4M";
+      if (d === 4500000) return "4.5M";
+      if (d === 5000000) return "5M";
+      return d;
+    },
+    domain: [0, Math.max(...pop_growth.map(d => d.population)) * 1.5]
+  },
+  x: {
+    label: "Year",
+    tickFormat: "d",
+    ticks: 5
+  },
+  marks: [
+    Plot.line(pop_growth, {
+      x: "year", 
+      y: "population",
+      stroke: "black",
+      strokeWidth: 1.5
+    }),
+    
+    Plot.dot(pop_growth, {
+      x: "year", 
+      y: "population",
+      fill: "black",
+      r: 5, // dot size
+      title: d => `Year: ${d.year}\nPopulation: ${d.population.toLocaleString()}`,
+      tip: true
+    })
+  ],
+  width: 800,
+  height: 500,
+  marginLeft: 50,
+  marginRight: 30,
+  marginTop: 30,
+  marginBottom: 40,
+  title: "Tunis Population Growth, 2000-2021"
+})
+```
+
+### POPULATION DISTRIBUTION BY AGE & SEX
+
+```{ojs}
+chart_pop_age_sex = Plot.plot({
+  title: "Population distribution in Tunis by sex",
+  width: 1500,
+  height: 900,
+  marginBottom: 100,
+  x: {
+    label: null,
+    tickRotate: -45,
+    paddingOuter: 0.6,
+    paddingInner: 0.6,
+    domain: [
+      "0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", 
+      "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", 
+      "65-69", "70-74", "75-79", "80+"
+    ]
+  },
+  y: {
+    label: "Percentage of Age Distribution",
+    domain: [0, 6],
+    grid: true
+  },
+  color: {
+    domain: ["female", "male"],
+    range: ["#f05f5c", "#00b4b7"],
+    legend: true
+  },
+  marks: [
+    // female bars left with tooltips
+    Plot.barY(
+      pop_age_sex.filter(d => d.sex === "female"),
+      {
+        x: d => d.ageBracket,
+        y: "percentage",
+        fill: "#f05f5c",
+        dx: -15, // offset to the left
+        width: .1,
+        title: d => `Age: ${d.ageBracket}
+Sex: ${d.sex}
+Percentage: ${d.percentage.toFixed(2)}%
+Population: ${d.count.toLocaleString()}`,
+        tip: { anchor: "right", dx: 0 }
+      }
+    ),
+    
+    // male bars right with tooltips
+    Plot.barY(
+      pop_age_sex.filter(d => d.sex === "male"),
+      {
+        x: d => d.ageBracket,
+        y: "percentage",
+        fill: "#00b4b7",
+        dx: 15, // offset to the right
+        width: 0.1,
+        title: d => `Age: ${d.ageBracket}
+Sex: ${d.sex}
+Percentage: ${d.percentage.toFixed(2)}%
+Population: ${d.count.toLocaleString()}`,
+        tip: { anchor: "left", dx: 0 }
+      }
+    ),
+    
+    Plot.ruleY([0])
+  ]
+})
+```
+
+## BUILT FORM
+### URBAN EXTENT AND CHANGE
+
+```{ojs}
+chart_uba = Plot.plot({
+  title: "Urban Built-up Area, 1985-2015",
+  width: 800,
+  height: 500,
+  marginLeft: 60,
+  marginBottom: 40,
+  x: {
+    label: null,
+    tickFormat: d => d3.format("d")(uba[d-1].yearName), // format as integer with no commas
+    domain: [1, 31],
+    ticks: d3.range(1, 32),
+    grid: true
+  },
+  y: {
+    label: "Urban built-up area (sq km)",
+    domain: [0,350],
+    grid: true
+  },
+  marks: [
+    Plot.line(uba, {
+      x: "year",
+      y: "uba",
+      stroke: "black",
+      strokeWidth: 2
+    }),
+    Plot.dot(uba, {
+      x: "year",
+      y: "uba",
+      fill: "black",
+      r: 4,
+      title: d => `Year: ${d.yearName}
+Urban Built-up Area: ${d.uba} sq km`,
+      tip: { anchor: "right", dx: 0 }
+      }
+    ),
+  ]
+})
+```
+
+### LAND COVER
+
+## CLIMATE CONDITIONS
+### PHOTOVOLTAIC POWER POTENTIAL
+```{ojs}
+chart_pv = Plot.plot({
+  title: "Seasonal availability of solar energy",
+  width: 800,
+  height: 500,
+  marginLeft: 60,
+  marginBottom: 40,
+  x: {
+    label: null,
+    tickFormat: d => pv [d-1].monthName,
+    domain: [1, 12],
+    ticks: d3.range(1, 13),
+    grid: true
+  },
+  y: {
+    label: "Daily PV energy yield (kWh/kWp)",
+    domain: [2.5, 5.5],
+    grid: true
+  },
+  marks: [
+    Plot.line(pv, {
+      x: "month",
+      y: "maxPv",
+      stroke: "black",
+      strokeWidth: 2
+    }),
+    Plot.dot(pv, {
+      x: "month",
+      y: "maxPv",
+      fill: "black",
+      r: 4,
+      title: d => `Month: ${d.monthName}
+Daily PV energy yield: ${d.maxPv} kWh/kWp`,
+      tip: { anchor: "right", dx: 0 }
+      }
+    ),
+    // horizontal dashed lines
+    Plot.ruleY([4.5], {
+      stroke: "gray",
+      strokeWidth: 1.5,
+      strokeDasharray: "5,5"
+    }),
+    Plot.ruleY([3.5], {
+      stroke: "gray",
+      strokeWidth: 1.5,
+      strokeDasharray: "5,5"
+    }),
+    // annotations
+    Plot.text(
+      ["Excellent Conditions"], 
+      {
+        x: 6,
+        y: 4.7,
+        dy: -5,
+        textAnchor: "middle",
+        fontWeight: "bold",
+        fontSize: 14,
+        fill: "gray"
+      }
+    ),
+    Plot.text(
+      ["Favorable Conditions"], 
+      {
+        x: 6,
+        y: 3.7,
+        dy: -5,
+        textAnchor: "middle",
+        fontWeight: "bold",
+        fontSize: 14,
+        fill: "gray"
+      }
+    )
+  ]
+})
+```
+
+
