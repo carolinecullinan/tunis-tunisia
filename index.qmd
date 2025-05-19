@@ -92,7 +92,7 @@ chart_pop_age_sex = Plot.plot({
   x: {
     label: null,
     tickRotate: -45,
-    paddingOuter: 0.6,
+    paddingOuter: 1.3,
     paddingInner: 0.6,
     domain: [
       "0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", 
@@ -186,7 +186,7 @@ chart_uba = Plot.plot({
       r: 4,
       title: d => `Year: ${d.yearName}
 Urban Built-up Area: ${d.uba} sq km`,
-      tip: { anchor: "right", dx: 0 }
+      tip: true
       }
     ),
   ]
