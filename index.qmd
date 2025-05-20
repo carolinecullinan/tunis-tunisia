@@ -21,6 +21,7 @@ pop_growth = FileAttachment("data/processed/pop_growth.csv").csv({typed: true})
 pop_age_sex = FileAttachment("data/processed/pop_age_sex.csv").csv({typed: true})
 uba = FileAttachment("data/processed/uba.csv").csv({typed: true})
 pv = FileAttachment("data/processed/pv.csv").csv({typed: true}) //note: this placeholder pv data (actual data for Algiers PV - there is not data available for Tunis pv )
+fu = FileAttachment("data/processed/fu.csv").csv({typed: true})
 ```
 
 ## POPULATION AND DEMOGRAPHIC TRENDS
@@ -230,7 +231,7 @@ chart_pv = Plot.plot({
       r: 4,
       title: d => `Month: ${d.monthName}
 Daily PV energy yield: ${d.maxPv} kWh/kWp`,
-      tip: { anchor: "right", dx: 0 }
+      tip: true
       }
     ),
     // horizontal dashed lines
@@ -272,5 +273,43 @@ Daily PV energy yield: ${d.maxPv} kWh/kWp`,
   ]
 })
 ```
+## RISK IDENTIFICATION
+### URBAN BUILT-UP AREA EXPOSED TO RIVER FLOODING
 
+```{ojs}
+chart_fu = Plot.plot({
+  title: "Built-up Area exposed to fluvial flooding",
+  width: 800,
+  height: 500,
+  marginLeft: 60,
+  marginBottom: 40,
+  x: {
+    label: null,
+    tickFormat: d => fu[d-1].yearName,
+    domain: [1, 31],
+    ticks: d3.range(1, 32),
+    grid: true
+  },
+  y: {
+    label: "Exposed urban built-up area (sq km)",
+    domain: [0, 10],
+    grid: true
+  },
+  marks: [
+    Plot.line(fu, {
+      x: "year",
+      y: "fu",
+      stroke: "black",
+      strokeWidth: 2,
+      title: d => `Year: ${d.yearName}
+Built-up Area Exposed: ${d.fu.toFixed(2)} sq km`,
+      tip: true
+    })
+  ]
+})
+```
+
+### URBAN BUILT-UP AREA EXPOSED TO SEA LEVEL RISING
+
+```{ojs}
 
