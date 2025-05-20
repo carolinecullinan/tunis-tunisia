@@ -23,6 +23,7 @@ uba = FileAttachment("data/processed/uba.csv").csv({typed: true})
 pv = FileAttachment("data/processed/pv.csv").csv({typed: true}) //note: this placeholder pv data (actual data for Algiers PV - there is not data available for Tunis pv )
 fu = FileAttachment("data/processed/fu.csv").csv({typed: true})
 pu = FileAttachment("data/processed/pu.csv").csv({typed: true})
+cu = FileAttachment("data/processed/cu.csv").csv({typed: true})
 ```
 
 ## POPULATION AND DEMOGRAPHIC TRENDS
@@ -347,4 +348,43 @@ Built-up Area Exposed: ${d.pu.toFixed(2)} sq km`,
   ]
 })
 ```
+### URBAN BUILT-UP AREA EXPOSED TO COASTAL FLOODING
+
+```{ojs}
+chart_cu = Plot.plot({
+  title: "Built-up Area exposed to coastal flooding",
+  width: 800,
+  height: 500,
+  marginLeft: 60,
+  marginBottom: 40,
+  x: {
+    label: null,
+    tickFormat: d => d3.format("d")(cu[d-1].yearName),
+    domain: [1, 31],
+    ticks: d3.range(1, 32, 5), // only show ticks for every 5 years 
+    grid: true,
+    //tickSpacing: 5 // increase spacing between ticks
+  },
+  y: {
+    label: "Exposed urban built-up area (sq km)",
+    domain: [0, 10],
+    grid: true
+  },
+  marks: [
+    Plot.line(cu, {
+      x: "year",
+      y: "cu",
+      stroke: "black",
+      strokeWidth: 2,
+      title: d => `Year: ${d.yearName}
+Built-up Area Exposed: ${d.cu.toFixed(2)} sq km`,
+      tip: true
+    })
+  ]
+})
+```
+
+
+
+
 
