@@ -22,6 +22,7 @@ pop_age_sex = FileAttachment("data/processed/pop_age_sex.csv").csv({typed: true}
 uba = FileAttachment("data/processed/uba.csv").csv({typed: true})
 pv = FileAttachment("data/processed/pv.csv").csv({typed: true}) //note: this placeholder pv data (actual data for Algiers PV - there is not data available for Tunis pv )
 fu = FileAttachment("data/processed/fu.csv").csv({typed: true})
+pu = FileAttachment("data/processed/pu.csv").csv({typed: true})
 ```
 
 ## POPULATION AND DEMOGRAPHIC TRENDS
@@ -165,7 +166,8 @@ chart_uba = Plot.plot({
     label: null,
     tickFormat: d => d3.format("d")(uba[d-1].yearName), // format as integer with no commas
     domain: [1, 31],
-    ticks: d3.range(1, 32),
+    ticks: d3.range(1, 32, 5), // only show ticks for every 5 years 
+    // tickSpacing: 5 // increase spacing between ticks
     grid: true
   },
   y: {
@@ -285,10 +287,11 @@ chart_fu = Plot.plot({
   marginBottom: 40,
   x: {
     label: null,
-    tickFormat: d => fu[d-1].yearName,
+    tickFormat: d => d3.format("d")(fu[d-1].yearName), // format tick labels as integer with no commas 
     domain: [1, 31],
-    ticks: d3.range(1, 32),
-    grid: true
+    ticks: d3.range(1, 32, 5), // only show ticks for every 5 years 
+    grid: true,
+    //tickSpacing: 5 // increase spacing between ticks
   },
   y: {
     label: "Exposed urban built-up area (sq km)",
@@ -309,7 +312,39 @@ Built-up Area Exposed: ${d.fu.toFixed(2)} sq km`,
 })
 ```
 
-### URBAN BUILT-UP AREA EXPOSED TO SEA LEVEL RISING
+### URBAN BUILT-UP AREA EXPOSED TO RAINWATER FLOODING
 
 ```{ojs}
+chart_pu = Plot.plot({
+  title: "Built-up Area exposed to pluvial flooding",
+  width: 800,
+  height: 500,
+  marginLeft: 60,
+  marginBottom: 40,
+  x: {
+    label: null,
+    tickFormat: d => d3.format("d")(pu[d-1].yearName), // format tick labels as integer with no commas 
+    domain: [1, 31],
+    ticks: d3.range(1, 32, 5), // only show ticks for every 5 years 
+    grid: true,
+    //tickSpacing: 5 // increase spacing between ticks
+  },
+  y: {
+    label: "Exposed urban built-up area (sq km)",
+    domain: [0, 100],
+    grid: true
+  },
+  marks: [
+    Plot.line(pu, {
+      x: "year",
+      y: "pu",
+      stroke: "black",
+      strokeWidth: 2,
+      title: d => `Year: ${d.yearName}
+Built-up Area Exposed: ${d.pu.toFixed(2)} sq km`,
+      tip: true
+    })
+  ]
+})
+```
 
