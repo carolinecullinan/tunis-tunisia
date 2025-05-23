@@ -383,6 +383,11 @@ Built-up Area Exposed: ${d.cu.toFixed(2)} sq km`,
   ]
 })
 ```
+### URBAN BUILT-UP AREA EXPOSED TO COMBINED FLOODING
+
+
+### HISTORICAL BURNT AREA & FIRE WEATHER INDEX
+
 
 
 
