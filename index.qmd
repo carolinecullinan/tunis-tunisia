@@ -24,6 +24,7 @@ pv = FileAttachment("data/processed/pv.csv").csv({typed: true}) //note: this pla
 fu = FileAttachment("data/processed/fu.csv").csv({typed: true})
 pu = FileAttachment("data/processed/pu.csv").csv({typed: true})
 cu = FileAttachment("data/processed/cu.csv").csv({typed: true})
+fwi = FileAttachment("data/processed/fwi.csv").csv({typed: true})
 ```
 
 ## POPULATION AND DEMOGRAPHIC TRENDS
@@ -387,7 +388,48 @@ Built-up Area Exposed: ${d.cu.toFixed(2)} sq km`,
 
 
 ### HISTORICAL BURNT AREA & FIRE WEATHER INDEX
-
+```{ojs}
+chart_fwi = Plot.plot({
+  title: "FWI in Tunis 2016-2021",
+  width: 800,
+  height: 500,
+  marginLeft: 60,
+  marginBottom: 40,
+  x: {
+    label: null,
+    // show ticks for first occurrence of each month
+    tickFormat: (d, i) => {
+      const currentMonth = fwi[d-1].monthName;
+      const prevMonth = d > 1 ? fwi[d-2].monthName : null;
+      return currentMonth !== prevMonth ? currentMonth : "";
+    },
+    domain: [1, 53],
+    // only include first week of each month
+    ticks: d3.range(1, 53).filter(week => {
+      const currentMonth = fwi[week-1].monthName;
+      const prevMonth = week > 1 ? fwi[week-2].monthName : null;
+      return currentMonth !== prevMonth;
+    }),
+    grid: true
+  },
+  y: {
+    label: "95th Percentile FWI",
+    domain: [0, 120],
+    grid: true
+  },
+  marks: [
+    Plot.line(fwi, {
+      x: d => d.week,
+      y: d => d.fwi,
+      stroke: "black",
+      strokeWidth: 2,
+      title: d => `Month: ${d.monthName}
+FWI: ${d.fwi.toFixed(2)}`,
+      tip: true
+    })
+  ]
+});
+```
 
 
 
