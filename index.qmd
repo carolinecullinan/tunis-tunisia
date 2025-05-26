@@ -24,6 +24,7 @@ pv = FileAttachment("data/processed/pv.csv").csv({typed: true}) //note: this pla
 fu = FileAttachment("data/processed/fu.csv").csv({typed: true})
 pu = FileAttachment("data/processed/pu.csv").csv({typed: true})
 cu = FileAttachment("data/processed/cu.csv").csv({typed: true})
+comb = FileAttachment("data/processed/comb.csv").csv({typed: true})
 fwi = FileAttachment("data/processed/fwi.csv").csv({typed: true})
 ```
 
@@ -385,6 +386,87 @@ Built-up Area Exposed: ${d.cu.toFixed(2)} sq km`,
 })
 ```
 ### URBAN BUILT-UP AREA EXPOSED TO COMBINED FLOODING
+
+```{ojs}
+chart_comb = Plot.plot({
+  title: "Built-up Area exposed to combined flooding ",
+  width: 800,
+  height: 500,
+  marginLeft: 60,
+  marginBottom: 40,
+  x: {
+    label: null,
+    tickFormat: d => d3.format("d")(comb[d-1].yearName), // format tick labels as integer with no commas 
+    domain: [1, 31],
+    ticks: d3.range(1, 32, 5), // only show ticks for every 5 years 
+    //tickSpacing: 5 // increase spacing between ticks
+    grid: true
+  },
+  y: {
+    label: "Area (sq km)",
+    domain: [0, 100],
+    grid: true
+  },
+  marks: [
+    // lines without tooltips
+    Plot.line(comb, {
+      x: "year",
+      y: "comb",
+      stroke: "black",
+      strokeWidth: 2
+    }),
+    Plot.line(pu, {
+      x: "year",
+      y: "pu",
+      stroke: "#619cfe",
+      strokeWidth: 2,
+      strokeDasharray: "4,4"
+    }),
+    Plot.line(fu, {
+      x: "year",
+      y: "fu",
+      stroke: "#f8766d",
+      strokeWidth: 2,
+      strokeDasharray: "4,4"
+    }),
+    Plot.line(cu, {
+      x: "year",
+      y: "cu",
+      stroke: "#02b939",
+      strokeWidth: 2,
+      strokeDasharray: "4,4"
+    }),
+    
+    // invisible vertical rule for unified tooltip
+    Plot.ruleX(comb, {
+      x: "year",
+      stroke: "transparent",
+      strokeWidth: 10,
+      title: d => {
+        // find corresponding values for this year in all datasets
+        const puValue = pu.find(p => p.year === d.year)?.pu || 0;
+        const fuValue = fu.find(f => f.year === d.year)?.fu || 0;
+        const cuValue = cu.find(c => c.year === d.year)?.cu || 0;
+        
+        return `Year: ${d.yearName}
+━━━━━━━━━━━━
+Combined: ${d.comb} sq km
+
+Pluvial: ${puValue.toFixed(1)} sq km  
+Fluvial: ${fuValue.toFixed(1)} sq km
+Coastal: ${cuValue.toFixed(1)} sq km`;
+      },
+      tip: true
+    }),
+   ],
+  // legend
+  color: {
+    legend: true,
+    domain: ["Combined", "River", "Rainwater", "Coastal"],
+    range: ["black", "#f8766d", "#619cfe", "#02b939"]
+  }
+})
+```
 
 
 ### HISTORICAL BURNT AREA & FIRE WEATHER INDEX
