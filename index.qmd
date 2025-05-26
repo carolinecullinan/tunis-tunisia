@@ -450,7 +450,7 @@ chart_comb = Plot.plot({
         
         return `Year: ${d.yearName}
 ━━━━━━━━━━━━
-Combined: ${d.comb} sq km
+Combined: ${d.comb.toFixed(1)} sq km
 
 Pluvial: ${puValue.toFixed(1)} sq km  
 Fluvial: ${fuValue.toFixed(1)} sq km
