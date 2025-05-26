@@ -25,7 +25,45 @@ fu = FileAttachment("data/processed/fu.csv").csv({typed: true})
 pu = FileAttachment("data/processed/pu.csv").csv({typed: true})
 cu = FileAttachment("data/processed/cu.csv").csv({typed: true})
 comb = FileAttachment("data/processed/comb.csv").csv({typed: true})
+elevation = FileAttachment("data/processed/elevation.csv").csv({typed: true})
 fwi = FileAttachment("data/processed/fwi.csv").csv({typed: true})
+```
+#### Variables
+```{ojs}
+// donut chart dimensions
+dimensions = ({
+  width: 600,
+  height: 600,
+  margin: 40,
+  radius: Math.min(600, 600) / 2 - 40
+})
+
+colorScale_elevation = d3.scaleOrdinal()
+  .domain(elevation.map(d => d.category))
+  .range([
+    "#f5c4c0",  // -5-40m (75.24%)
+    "#fa9fb5",  // 40-90m (17.17%)
+    "#f768a1",  // 90-135m (5.96%)
+    "#c51b8a"   // remaining higher elevations (1.62%)
+  ])
+
+  colorScale_slope = d3.scaleOrdinal()
+  .domain(slope.map(d => d.category))
+  .range([
+    "#ffffd4",  // for 0-2° slopes (77.92%)
+    "#fed98e",  // for 2-5° slopes (14.38%)
+    "#fe9929",  // for 5-10° slopes (5.66%)
+    "#d95f0e",  // for 10-20° slopes (1.85%)
+    "#993404"   // for 20°+ slopes (0.19, the unlabeled remainder)
+  ])
+
+  pieGenerator = d3.pie()
+  .value(d => d.percentage)
+  .sort(null)
+
+  arcGenerator = d3.arc()
+  .innerRadius(dimensions.radius * 0.50)
+  .outerRadius(dimensions.radius)
 ```
 
 ## POPULATION AND DEMOGRAPHIC TRENDS
@@ -467,7 +505,92 @@ Coastal: ${cuValue.toFixed(1)} sq km`;
   }
 })
 ```
+### ELEVATION
 
+```{ojs}
+legend_elevation = {
+  const svg = d3.create("svg")
+    .attr("width", 200)
+    .attr("height", 180);
+    
+  const legendGroup = svg.append("g")
+    .attr("transform", "translate(20, 20)");
+
+  // title
+  legendGroup.append("text")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("font-weight", "bold")
+    .attr("font-size", "14px")
+    .text("Elevation");
+
+  legendGroup.append("text")
+    .attr("x", 0)
+    .attr("y", 20)
+    .attr("font-style", "italic")
+    .attr("font-size", "12px")
+    .text("Meters above sea level (MASL)");
+
+  const data = [
+    { range: "-5-40", color: "#f5c4c0" },
+    { range: "40-90", color: "#fa9fb5" },
+    { range: "90-135", color: "#f768a1" },
+    { range: "135+", color: "#c51b8a" }
+    //{ range: "135-235", color: "#980043" }
+  ];
+
+  const legendEntries = legendGroup.selectAll(".legend-entry")
+    .data(data)
+    .join("g")
+    .attr("class", "legend-entry")
+    .attr("transform", (d, i) => `translate(0, ${i * 25 + 40})`);
+
+  // colored rectangles
+  legendEntries.append("rect")
+    .attr("width", 15)
+    .attr("height", 15)
+    .attr("fill", d => d.color);
+
+  // text labels
+  legendEntries.append("text")
+    .attr("x", 25)
+    .attr("y", 12)
+    .text(d => d.range)
+    .style("font-size", "12px")
+    .style("font-family", "Arial");
+
+  return svg.node();
+}
+
+chart_elevation = {
+  const svg = d3.create("svg")
+    .attr("width", dimensions.width)
+    .attr("height", dimensions.height)
+    .attr("viewBox", [-dimensions.width / 2, -dimensions.height / 2, dimensions.width, dimensions.height]);
+
+  const arcs = svg.append("g")
+    .selectAll("path")
+    .data(pieGenerator(elevation))
+    .join("path")
+      .attr("fill", d => colorScale_elevation(d.data.bin))
+      .attr("stroke", "white")        // add white stroke
+      .attr("stroke-width", "2px")    // set stroke width
+      .attr("d", arcGenerator);
+
+  const labels = svg.append("g")
+    .selectAll("text")
+    .data(pieGenerator(elevation))
+    .join("text")
+      .attr("transform", d => `translate(${arcGenerator.centroid(d)})`)
+      .attr("dy", "0.35em")
+      .attr("text-anchor", "middle")
+      .style("font-size", "16px")
+      .style("fill", "black")
+      .text(d => d.data.percentage > 1.5 ? `${d.data.percentage}%` : "");
+
+  return svg.node();
+}
+```
 
 ### HISTORICAL BURNT AREA & FIRE WEATHER INDEX
 ```{ojs}
