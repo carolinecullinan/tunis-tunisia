@@ -260,7 +260,7 @@ Urban Built-up Area: ${d.uba} sq km`,
 legend_lc = {
   const svg = d3.create("svg")
     .attr("width", 200)
-    .attr("height", 180);
+    .attr("height", 260);
     
   const legendGroup = svg.append("g")
     .attr("transform", "translate(20, 20)");
@@ -281,15 +281,15 @@ legend_lc = {
     .text("Land cover type");
 
   const data = [
-    { range: "Tree cover", color: "#629777" },
     { range: "Grassland", color: "#9bbb7f" },
-    { range: "Built-up", color: "#d3605f" },
-    { range: "Mangroves", color: "#48d394" },
+    { range: "Tree cover", color: "#629777" },
+    { range: "Shrubland", color: "#e2c985" },
+    { range: "Cropland", color: "#eaa86f" },
+    { range: "Bare/sparse vegetation", color: "#b4ada4" },  
     { range: "Permanent water bodies", color: "#61acdc" },
     { range: "Herbaceous wetland", color: "#979ec9" },
-    { range: "Shrubland", color: "#e2c985" },
-    { range: "Bare/sparse vegetation", color: "#b4ada4" },  
-    { range: "Cropland", color: "#eaa86f" },
+    { range: "Mangroves", color: "#48d394" },
+    { range: "Built-up", color: "#d3605f" },
   ];
 
   const legendEntries = legendGroup.selectAll(".legend-entry")
@@ -314,6 +314,7 @@ legend_lc = {
 
   return svg.node();
 }
+
 chart_lc = {
   const svg = d3.create("svg")
     .attr("width", dimensions.width)
