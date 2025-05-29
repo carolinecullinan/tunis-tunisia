@@ -32,6 +32,12 @@ fwi = FileAttachment("data/processed/fwi.csv").csv({typed: true})
 ```
 #### Variables
 ```{ojs}
+// plotWidth variable to calculate responsive bar offests based on plot width for Population Distribution by Age & Sex
+plotWidth = width * 0.95 // make width 95% of container/viewport
+
+// barOffset variable to calculate responsive bar offests based on plot width for Population Distribution by Age & Sex
+barOffset = Math.max(8, plotWidth / 120) // scales with width, minimum of 8 px
+
 // donut chart dimensions
 dimensions = ({
   width: width * 0.95, // make width 95% of container/viewport
@@ -186,8 +192,8 @@ chart_pop_growth= Plot.plot({
 ```{ojs}
 chart_pop_age_sex = Plot.plot({
   title: "Population distribution in Tunis by sex",
-  width: width * 0.95, // make width 95% of container/viewport,
-  height: (width * 0.95) * 0.6, // maintains a 1.67:1 aspect ratio (width: height), note: 0.5 = wider chart (2:1 ratio); 0.75 = more square (1.33:1 ratio),
+  width: plotWidth,
+  height: plotWidth * 0.6, // maintains a 1.67:1 aspect ratio (width: height), note: 0.5 = wider chart (2:1 ratio); 0.75 = more square (1.33:1 ratio),
   marginBottom: 100,
   x: {
     label: null,
@@ -218,8 +224,8 @@ chart_pop_age_sex = Plot.plot({
         x: d => d.ageBracket,
         y: "percentage",
         fill: "#f05f5c",
-        dx: -15, // offset to the left
-        width: .1,
+        dx: -barOffset, // responsive bar offset to the left
+        width: barOffset * 1.5, // responsive bar width
         title: d => `Age: ${d.ageBracket}
 Sex: ${d.sex}
 Percentage: ${d.percentage.toFixed(2)}%
@@ -235,8 +241,8 @@ Population: ${d.count.toLocaleString()}`,
         x: d => d.ageBracket,
         y: "percentage",
         fill: "#00b4b7",
-        dx: 15, // offset to the right
-        width: 0.1,
+        dx: barOffset, // responsive bar offset to the right
+        width: barOffset * 1.5, // responsive bar width
         title: d => `Age: ${d.ageBracket}
 Sex: ${d.sex}
 Percentage: ${d.percentage.toFixed(2)}%
