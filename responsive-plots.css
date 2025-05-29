@@ -1,0 +1,29 @@
+/* specific selectors for OJS plots in Quarto - ensures that css applies to the copied Observable Notebook code running in Quarto's OJS environment */
+.quarto-figure .plot svg text,
+.cell-output .plot svg text,
+div[id*="ojs-cell"] .plot svg text {
+  font-size: clamp(8px, 1.2vw, 14px) !important;
+}
+
+.quarto-figure .plot svg g[aria-label="x-axis"] text,
+.cell-output .plot svg g[aria-label="x-axis"] text,
+div[id*="ojs-cell"] .plot svg g[aria-label="x-axis"] text {
+  font-size: clamp(4px, 0.5vw, 9px) !important;
+}
+
+.quarto-figure .plot svg g[aria-label="y-axis"] text,
+.cell-output .plot svg g[aria-label="y-axis"] text,
+div[id*="ojs-cell"] .plot svg g[aria-label="y-axis"] text {
+  font-size: clamp(6px, 0.7vw, 11px) !important;
+}
+
+.quarto-figure .plot svg g[aria-label="title"] text,
+.cell-output .plot svg g[aria-label="title"] text,
+div[id*="ojs-cell"] .plot svg g[aria-label="title"] text {
+  font-size: clamp(12px, 1.8vw, 18px) !important;
+}
+
+/* fallback safety net - target all SVG text in main content to ensure plots are readable even if Quarto's HTML structure changes between Quarto versions and themes */
+.quarto-container svg text {
+  font-size: clamp(6px, 1vw, 12px) !important;
+}
