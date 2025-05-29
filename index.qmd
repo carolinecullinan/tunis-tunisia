@@ -36,7 +36,7 @@ fwi = FileAttachment("data/processed/fwi.csv").csv({typed: true})
 plotWidth = width * 0.95 // make width 95% of container/viewport
 
 // barOffset variable to calculate responsive bar offests based on plot width for Population Distribution by Age & Sex
-barOffset = Math.max(8, plotWidth / 120) // scales with width, minimum of 8 px
+barOffset = Math.max(2, plotWidth / 160) // scales with width, minimum of 2 px
 
 // donut chart dimensions
 dimensions = ({
@@ -195,6 +195,8 @@ chart_pop_age_sex = Plot.plot({
   width: plotWidth,
   height: plotWidth * 0.6, // maintains a 1.67:1 aspect ratio (width: height), note: 0.5 = wider chart (2:1 ratio); 0.75 = more square (1.33:1 ratio),
   marginBottom: 100,
+  marginLeft: 110,
+  marginRight: 110,
   x: {
     label: null,
     tickRotate: -45,
