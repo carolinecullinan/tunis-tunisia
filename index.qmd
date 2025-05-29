@@ -34,10 +34,10 @@ fwi = FileAttachment("data/processed/fwi.csv").csv({typed: true})
 ```{ojs}
 // donut chart dimensions
 dimensions = ({
-  width: 600,
-  height: 600,
-  margin: 40,
-  radius: Math.min(600, 600) / 2 - 40
+  width: width * 0.95, // make width 95% of container/viewport
+  height: (width * 0.95) * 0.75, // maintains a 1.67:1 aspect ratio (width: height), note: 0.5 = wider chart (2:1 ratio); 0.75 = more square (1.33:1 ratio),
+  margin: 140,
+  radius: Math.min(600, 600) / 2 - 140
 })
 
 colorScale_lc = d3.scaleOrdinal()
@@ -89,21 +89,68 @@ colorScale_elevation = d3.scaleOrdinal()
 ```{ojs}
 // population growth chart with Plot
 chart_pop_growth= Plot.plot({
+  width: width * 0.95, // make width 95% of container/viewport
+  height: (width * 0.95) * 0.6, // maintains a 1.67:1 aspect ratio (width: height), note: 0.5 = wider chart (2:1 ratio); 0.75 = more square (1.33:1 ratio)
+  marginLeft: 50,
+  marginRight: 30,
+  marginTop: 30,
+  marginBottom: 40,
+  title: "Tunis Population Growth, 2000-2021",
   y: {
     grid: true,
     label: "Population",
     // tickformat as function to avoid syntax issues
     tickFormat: d => {
       if (d === 0) return "0";
+      if (d === 100000) return "100K";
+      if (d === 200000) return "200K";
+      if (d === 300000) return "300K";
+      if (d === 400000) return "400K";
       if (d === 500000) return "500K";
+      if (d === 600000) return "600K";
+      if (d === 700000) return "700K";
+      if (d === 800000) return "800K";
+      if (d === 900000) return "900K";
       if (d === 1000000) return "1M";
+      if (d === 1100000) return "1.1M";
+      if (d === 1200000) return "1.2M";
+      if (d === 1300000) return "1.3M";
+      if (d === 1400000) return "1.4M";
       if (d === 1500000) return "1.5M";
+      if (d === 1600000) return "1.6M";
+      if (d === 1700000) return "1.7M";
+      if (d === 1800000) return "1.8M";
+      if (d === 1900000) return "1.9M";
       if (d === 2000000) return "2M";
+      if (d === 2100000) return "2.1M";
+      if (d === 2200000) return "2.2M";
+      if (d === 2300000) return "2.3M";
+      if (d === 2400000) return "2.4M";
       if (d === 2500000) return "2.5M";
+      if (d === 2600000) return "2.6M";
+      if (d === 2700000) return "2.7M";
+      if (d === 2800000) return "2.8M";
+      if (d === 2900000) return "2.9M";
       if (d === 3000000) return "3M";
+      if (d === 3100000) return "3.1M";
+      if (d === 3200000) return "3.2M";
+      if (d === 3300000) return "3.3M";
+      if (d === 3400000) return "3.4M";
       if (d === 3500000) return "3.5M";
+      if (d === 3600000) return "3.6M";
+      if (d === 3700000) return "3.7M";
+      if (d === 3800000) return "3.8M";
+      if (d === 3900000) return "3.9M";
       if (d === 4000000) return "4M";
+      if (d === 4100000) return "4.1M";
+      if (d === 4200000) return "4.2M";
+      if (d === 4300000) return "4.3M";
+      if (d === 4400000) return "4.4M";
       if (d === 4500000) return "4.5M";
+      if (d === 4600000) return "4.6M";
+      if (d === 4700000) return "4.7M";
+      if (d === 4800000) return "4.8M";
+      if (d === 4900000) return "4.9M";
       if (d === 5000000) return "5M";
       return d;
     },
@@ -126,18 +173,11 @@ chart_pop_growth= Plot.plot({
       x: "year", 
       y: "population",
       fill: "black",
-      r: 5, // dot size
+      r: 3, // dot size
       title: d => `Year: ${d.year}\nPopulation: ${d.population.toLocaleString()}`,
       tip: true
     })
-  ],
-  width: 800,
-  height: 500,
-  marginLeft: 50,
-  marginRight: 30,
-  marginTop: 30,
-  marginBottom: 40,
-  title: "Tunis Population Growth, 2000-2021"
+  ]
 })
 ```
 
@@ -146,14 +186,14 @@ chart_pop_growth= Plot.plot({
 ```{ojs}
 chart_pop_age_sex = Plot.plot({
   title: "Population distribution in Tunis by sex",
-  width: 1500,
-  height: 900,
+  width: width * 0.95, // make width 95% of container/viewport,
+  height: (width * 0.95) * 0.6, // maintains a 1.67:1 aspect ratio (width: height), note: 0.5 = wider chart (2:1 ratio); 0.75 = more square (1.33:1 ratio),
   marginBottom: 100,
   x: {
     label: null,
     tickRotate: -45,
     paddingOuter: 1.3,
-    paddingInner: 0.6,
+    paddingInner: .6,
     domain: [
       "0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", 
       "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", 
@@ -216,16 +256,16 @@ Population: ${d.count.toLocaleString()}`,
 ```{ojs}
 chart_uba = Plot.plot({
   title: "Urban Built-up Area, 1985-2015",
-  width: 800,
-  height: 500,
+  width: width * 0.95, // make width 95% of container/viewport
+  height: (width * 0.95) * 0.6, // maintains a 1.67:1 aspect ratio (width: height), note: 0.5 = wider chart (2:1 ratio); 0.75 = more square (1.33:1 ratio)
   marginLeft: 60,
   marginBottom: 40,
   x: {
     label: null,
     tickFormat: d => d3.format("d")(uba[d-1].yearName), // format as integer with no commas
     domain: [1, 31],
-    ticks: d3.range(1, 32, 5), // only show ticks for every 5 years 
-    // tickSpacing: 5 // increase spacing between ticks
+    ticks: Math.max(5, Math.min(15, Math.floor(width / 80))), // dynamic ticks based on width - gives 5-15 ticks based on available width (roughly 1 tick per 80 pixels) 
+    //d3.range(1, 32),
     grid: true
   },
   y: {
@@ -247,7 +287,7 @@ chart_uba = Plot.plot({
       r: 4,
       title: d => `Year: ${d.yearName}
 Urban Built-up Area: ${d.uba} sq km`,
-      tip: true
+      tip: true //tip: { anchor: "right", dx: 0 }
       }
     ),
   ]
@@ -350,15 +390,16 @@ chart_lc = {
 ```{ojs}
 chart_pv = Plot.plot({
   title: "Seasonal availability of solar energy",
-  width: 800,
-  height: 500,
+  width: width * 0.95, // make width 95% of container/viewport,
+  height: (width * 0.95) * 0.6, // maintains a 1.67:1 aspect ratio (width: height), note: 0.5 = wider chart (2:1 ration); 0.75 = more square (1.33:1 ratio),
   marginLeft: 60,
   marginBottom: 40,
   x: {
     label: null,
     tickFormat: d => pv [d-1].monthName,
     domain: [1, 12],
-    ticks: d3.range(1, 13),
+    ticks: Math.max(5, Math.min(15, Math.floor(width / 80))), // dynamic ticks based on width - gives 5-15 ticks based on available width (roughly 1 tick per 80 pixels)
+    //d3.range(1, 13),
     grid: true
   },
   y: {
@@ -428,17 +469,17 @@ Daily PV energy yield: ${d.maxPv} kWh/kWp`,
 ```{ojs}
 chart_fu = Plot.plot({
   title: "Built-up Area exposed to fluvial flooding",
-  width: 800,
-  height: 500,
+  width: width * 0.95, // make width 95% of container/viewport
+  height: (width * 0.95) * 0.6, // maintains a 1.67:1 aspect ratio (width: height), note: 0.5 = wider chart (2:1 ratio); 0.75 = more square (1.33:1 ratio),
   marginLeft: 60,
   marginBottom: 40,
   x: {
     label: null,
-    tickFormat: d => d3.format("d")(fu[d-1].yearName), // format tick labels as integer with no commas 
+    tickFormat: d => d3.format("d")(fu[d-1].yearName),
     domain: [1, 31],
-    ticks: d3.range(1, 32, 5), // only show ticks for every 5 years 
-    grid: true,
-    //tickSpacing: 5 // increase spacing between ticks
+    ticks: Math.max(5, Math.min(15, Math.floor(width / 80))), // dynamic ticks based on width - gives 5-15 ticks based on available width (roughly 1 tick per 80 pixels) 
+      //d3.range(1, 32),
+    grid: true
   },
   y: {
     label: "Exposed urban built-up area (sq km)",
@@ -464,17 +505,17 @@ Built-up Area Exposed: ${d.fu.toFixed(2)} sq km`,
 ```{ojs}
 chart_pu = Plot.plot({
   title: "Built-up Area exposed to pluvial flooding",
-  width: 800,
-  height: 500,
+  width: width * 0.95,
+  height: (width * 0.95) * 0.6, // maintains a 1.67:1 aspect ratio (width: height), note: 0.5 = wider chart (2:1 ratio); 0.75 = more square (1.33:1 ratio),
   marginLeft: 60,
   marginBottom: 40,
   x: {
     label: null,
-    tickFormat: d => d3.format("d")(pu[d-1].yearName), // format tick labels as integer with no commas 
+    tickFormat: d => d3.format("d")(pu[d-1].yearName),
     domain: [1, 31],
-    ticks: d3.range(1, 32, 5), // only show ticks for every 5 years 
-    grid: true,
-    //tickSpacing: 5 // increase spacing between ticks
+    ticks: Math.max(5, Math.min(15, Math.floor(width / 80))), // dynamic ticks based on width - gives 5-15 ticks based on available width (roughly 1 tick per 80 pixels) 
+    // d3.range(1, 32),
+    grid: true
   },
   y: {
     label: "Exposed urban built-up area (sq km)",
@@ -499,17 +540,17 @@ Built-up Area Exposed: ${d.pu.toFixed(2)} sq km`,
 ```{ojs}
 chart_cu = Plot.plot({
   title: "Built-up Area exposed to coastal flooding",
-  width: 800,
-  height: 500,
+  width: width * 0.95, // make width 95% of container/viewport,
+  height: (width * 0.95) * 0.6, // maintains a 1.67:1 aspect ratio (width: height), note: 0.5 = wider chart (2:1 ratio); 0.75 = more square (1.33:1 ratio),
   marginLeft: 60,
   marginBottom: 40,
   x: {
     label: null,
     tickFormat: d => d3.format("d")(cu[d-1].yearName),
     domain: [1, 31],
-    ticks: d3.range(1, 32, 5), // only show ticks for every 5 years 
-    grid: true,
-    //tickSpacing: 5 // increase spacing between ticks
+    ticks: Math.max(5, Math.min(15, Math.floor(width / 80))), // dynamic ticks based on width - gives 5-15 ticks based on available width (roughly 1 tick per 80 pixels) 
+    // d3.range(1, 32),
+    grid: true
   },
   y: {
     label: "Exposed urban built-up area (sq km)",
@@ -534,15 +575,16 @@ Built-up Area Exposed: ${d.cu.toFixed(2)} sq km`,
 ```{ojs}
 chart_comb = Plot.plot({
   title: "Built-up Area exposed to combined flooding ",
-  width: 800,
-  height: 500,
+  width: width * 0.95, // make width 95% of container/viewport,
+  height: (width * 0.95) * 0.6, // maintains a 1.67:1 aspect ratio (width: height), note: 0.5 = wider chart (2:1 ratio); 0.75 = more square (1.33:1 ratio),
   marginLeft: 60,
   marginBottom: 40,
   x: {
     label: null,
     tickFormat: d => d3.format("d")(comb[d-1].yearName), // format tick labels as integer with no commas 
     domain: [1, 31],
-    ticks: d3.range(1, 32, 5), // only show ticks for every 5 years 
+    ticks: Math.max(5, Math.min(15, Math.floor(width / 80))), // dynamic ticks based on width - gives 5-15 ticks based on available width (roughly 1 tick per 80 pixels) 
+    // d3.range(1, 32, 5), // only show ticks for every 5 years 
     //tickSpacing: 5 // increase spacing between ticks
     grid: true
   },
@@ -584,6 +626,8 @@ chart_comb = Plot.plot({
     // invisible vertical rule for unified tooltip
     Plot.ruleX(comb, {
       x: "year",
+      y1: "comb",
+      y2: d => d.comb + 5,
       stroke: "transparent",
       strokeWidth: 10,
       title: d => {
@@ -594,7 +638,7 @@ chart_comb = Plot.plot({
         
         return `Year: ${d.yearName}
 ━━━━━━━━━━━━
-Combined: ${d.comb.toFixed(1)} sq km
+Combined: ${d.comb} sq km
 
 Pluvial: ${puValue.toFixed(1)} sq km  
 Fluvial: ${fuValue.toFixed(1)} sq km
@@ -788,8 +832,8 @@ chart_slope = {
 ```{ojs}
 chart_fwi = Plot.plot({
   title: "FWI in Tunis 2016-2021",
-  width: 800,
-  height: 500,
+  width: width * 0.95, // make width 95% of container/viewport
+  height: (width * 0.95) * 0.6, // maintains a 1.67:1 aspect ratio (width: height), note: 0.5 = wider chart (2:1 ratio); 0.75 = more square (1.33:1 ratio)
   marginLeft: 60,
   marginBottom: 40,
   x: {
