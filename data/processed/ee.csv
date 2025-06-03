@@ -1,0 +1,30 @@
+begin_year,distance,eqMagnitude,severity,line1,line2,line3
+1903,316,5.3,Moderate,MAY 1903,"M5.3, 316 km away",Palermo
+1906,335,5.6,Large,SEPTEMBER 1906,"M5.6, 335 km away",Sicily
+1907,335,5.1,Moderate,FEBRUARY 1907,"M5.1, 335 km away",Sicily
+1908,497,7.0,Very Large,DECEMBER 1908,"M7.0, 498 km away, 78,000 fatalities","Messina, Sicily, Calabria"
+1909,452,5.3,Moderate,OCTOBER 1909,"M5.3, 453 km away",Sicily
+1911,652,4.3,Small,OCTOBER 1911,"M4.3, 453 km away",Etna
+1914,452,4.9,Small,MAY 1914,"M4.9, 453 km away, 120 fatalities","Catania, Etna"
+1916,494,5.1,Moderate,JULY 1916,"M5.1, 494 km away",Stromboli Island
+1924,489,5.6,Large,MARCH 1924,"M5.6, 489 km away",Batna
+1926,451,5.3,Moderate,AUGUST 1926,"M5.3, 451 km away",Salina Island
+1930,434,5.0,Moderate,MARCH 1930,"M5.0, 434 km away",Filicudi Island
+1931,444,5.0,Moderate,JULY 1931,"M5.0, 444 km away",Sicily
+1933,256,5.0,Moderate,FEBRUARY 1933,"M5.0, 256 km away",Sicily
+1939,437,5.0,Moderate,JANUARY 1939,"M5.0, 438 km away",Calabria
+1940,323,4.8,Small,JANUARY 1940,"M4.8, 324 km away",NA
+1941,240,5.0,Moderate,MARCH 1941,"M5.0, 241 km away",Calabria
+1946,481,5.6,Large,FEBRUARY 1946,"M5.6, 481 km away, 264 fatalities",Hodna Mountains
+1947,196,5.3,Moderate,AUGUST 1947,"M5.3, 197 km away, 3 fatalities",NA
+1957,135,5.6,Large,FEBRUARY 1957,"M5.6, 135 km away, 13 fatalities","Sidi Abd,Sidi Toul"
+1961,468,5.0,Moderate,MARCH 1961,"M5.0, 469 km away, 15 fatalities",Sicily
+1962,141,5.3,Moderate,FEBRUARY 1962,"M5.3, 141 km away","Gafour,OUM-Zid,EL Akhouат"
+1968,282,6.0,Very Large,JANUARY 1968,"M6.0, 283 km away, 216 fatalities",Sicily
+1968,466,4.9,Small,FEBRUARY 1968,"M4.9, 466 km away, 1 fatality",El Asn (BABORD)
+1975,446,4.3,Small,JULY 1975,"M4.3, 446 km away, 1 fatality",Djebel Babor
+1978,462,5.7,Large,APRIL 1978,"M5.7, 463 km away, 5 fatalities",Sicily
+1990,467,5.3,Moderate,DECEMBER 1990,"M5.3, 468 km away, 19 fatalities",Sicily: Carlentini
+2002,553,6.0,Very Large,SEPTEMBER 2002,"M6.0, 354 km away, 2 fatalities",Sicily: Palermo
+2018,442,5.0,Moderate,DECEMBER 2018,"M5.0, 443 km away",Sicily: Catpana
+2021,444,6.0,Very Large,MARCH 2021,"M6.0, 445 km away",NA
