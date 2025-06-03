@@ -1,0 +1,7 @@
+BEGAN,ENDED,DEAD,DISPLACED,MAINCAUSE,SEVERITY,severity,duration,fatalities,displaced,line1,line2,line3,text,mag,begin_day,end_day,begin_month,end_month,begin_year,end_year
+1986-09-30,1986-10-03,20,500,Torrential rain,1,Large event,3 days,20 fatalities,500 displaced,SEPTEMBER 1986,"Large event, Torrential rain","3 days, 20 fatalities, 500 displaced","SEPTEMBER 1986: Large event, Torrential rain
+3 days, 20 fatalities, 500 displaced",1,273,276,9,10,1986.273,1986
+2003-09-16,2003-09-18,4,0,Heavy rain,1,Large event,2 days,4 fatalities,0 displaced,SEPTEMBER 2003,"Large event, Heavy rain","2 days, 4 fatalities, 0 displaced","SEPTEMBER 2003: Large event, Heavy rain
+2 days, 4 fatalities, 0 displaced",0,259,261,9,9,2003.259,2003
+2007-10-13,2007-10-16,13,0,Heavy rain,1,Large event,3 days,13 fatalities,0 displaced,OCTOBER 2007,"Large event, Heavy rain","3 days, 13 fatalities, 0 displaced","OCTOBER 2007: Large event, Heavy rain
+3 days, 13 fatalities, 0 displaced",0,286,289,10,10,2007.286,2007
